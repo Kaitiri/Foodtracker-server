@@ -7,13 +7,14 @@ const app = express();
 app.use(express.json());
  
 routes.forEach(route => {
-    app[route.method](route.path, route.handler);
+    app[route.method]('/api' + route.path, route.handler);
 });
 
 const start = async() => {
     await db.connect('mongodb://localhost:27017')
     await app.listen(8080);
     console.log('server is listening on port 8080');
+    console.log(app._router)
 }
 
 start();
